@@ -124,6 +124,10 @@ Stream events from every domain through this pipeline:
 
 This creates what I call **ambient intelligence** — the system is always gently processing, always ready with context you didn't know to ask for. When I start a work session after a few days away, the system has already identified what changed in my knowledge base, what new research surfaced that's relevant to my active projects, and what my agents discussed while I was gone.
 
+*The Conversation Intelligence dashboard — live Flink stream processing showing frame distribution, compression metrics, message timeline, and per-agent activity across both constellation teams:*
+
+![Conversation Intelligence Dashboard](../images/conversation-intelligence-dashboard.png)
+
 ### Agent Constellations, Not Chatbots
 
 A single AI assistant — no matter how good the model — has one perspective. A constellation of specialized agents has many:
