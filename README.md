@@ -8,6 +8,10 @@ Articles, reports, and technical writing by John M. on AI cognitive architecture
 |------|-------|------|
 | 2026-03-12 | [Your "Second Brain" Is Just a Filing Cabinet With a Search Bar](articles/2026-03-12-beyond-the-second-brain.md) | AI, Cognitive Architecture, Knowledge Graphs, Multi-Agent Systems, Stream Processing |
 
+## Architecture
+
+- [UCIS Architecture Overview 2026](architecture/ucis-architecture-2026.html) — Interactive system overview: three graph domains, streaming pipeline, agent constellations, and layered architecture
+
 ## About
 
 These articles document the architecture, patterns, and honest failures of building a real cognitive system — not a filing cabinet with better search. Written from the perspective of someone who actually built it, broke it, and rebuilt it.

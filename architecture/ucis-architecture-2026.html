@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCIS — Unified Consciousness Intelligence System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mem: #00ff88;
+            --mem-dim: rgba(0, 255, 136, 0.15);
+            --know: #00a8ff;
+            --know-dim: rgba(0, 168, 255, 0.15);
+            --disc: #ff00ff;
+            --disc-dim: rgba(255, 0, 255, 0.15);
+            --stream: #ffaa00;
+            --stream-dim: rgba(255, 170, 0, 0.15);
+            --agent-strat: #00ffff;
+            --agent-eng: #ff6644;
+            --bg: #030308;
+            --surface: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --text: #e0e0e0;
+            --text-dim: #666;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Starfield background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 30% 65%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.35), transparent),
+                radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.15), transparent),
+                radial-gradient(1px 1px at 65% 75%, rgba(255,255,255,0.25), transparent),
+                radial-gradient(1px 1px at 5% 55%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 55% 85%, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 85% 55%, rgba(255,255,255,0.35), transparent),
+                radial-gradient(1px 1px at 35% 5%, rgba(255,255,255,0.15), transparent),
+                radial-gradient(1px 1px at 95% 35%, rgba(255,255,255,0.25), transparent);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page { position: relative; z-index: 1; }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ═══════════ HEADER ═══════════ */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--mem), var(--know), var(--disc), transparent);
+        }
+
+        .hero-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: 12px;
+            background: linear-gradient(135deg, var(--mem) 0%, var(--know) 40%, var(--disc) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 40px rgba(0, 168, 255, 0.3));
+            animation: titlePulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes titlePulse {
+            from { filter: drop-shadow(0 0 30px rgba(0, 255, 136, 0.3)); }
+            to { filter: drop-shadow(0 0 50px rgba(255, 0, 255, 0.3)); }
+        }
+
+        .hero-subtitle {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: #888;
+            margin-top: 16px;
+            letter-spacing: 4px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--mem), var(--know));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* ═══════════ SECTION HEADERS ═══════════ */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            margin-bottom: 50px;
+        }
+
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-tag.mem { color: var(--mem); }
+        .section-tag.know { color: var(--know); }
+        .section-tag.disc { color: var(--disc); }
+        .section-tag.stream { color: var(--stream); }
+        .section-tag.agents { color: var(--agent-strat); }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+        }
+
+        .section-desc {
+            font-size: 1.1rem;
+            color: #777;
+            margin-top: 12px;
+            max-width: 700px;
+            line-height: 1.6;
+        }
+
+        /* ═══════════ THREE DOMAINS ═══════════ */
+        .domains-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .domain-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+        }
+
+        .domain-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .domain-card.memory::before { background: linear-gradient(90deg, transparent, var(--mem), transparent); }
+        .domain-card.knowledge::before { background: linear-gradient(90deg, transparent, var(--know), transparent); }
+        .domain-card.discovery::before { background: linear-gradient(90deg, transparent, var(--disc), transparent); }
+
+        .domain-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .domain-card.memory:hover { box-shadow: 0 20px 60px rgba(0, 255, 136, 0.12); }
+        .domain-card.knowledge:hover { box-shadow: 0 20px 60px rgba(0, 168, 255, 0.12); }
+        .domain-card.discovery:hover { box-shadow: 0 20px 60px rgba(255, 0, 255, 0.12); }
+
+        .domain-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 24px;
+        }
+
+        .memory .domain-icon { background: var(--mem-dim); border: 1px solid rgba(0,255,136,0.2); }
+        .knowledge .domain-icon { background: var(--know-dim); border: 1px solid rgba(0,168,255,0.2); }
+        .discovery .domain-icon { background: var(--disc-dim); border: 1px solid rgba(255,0,255,0.2); }
+
+        .domain-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .memory .domain-name { color: var(--mem); }
+        .knowledge .domain-name { color: var(--know); }
+        .discovery .domain-name { color: var(--disc); }
+
+        .domain-tech {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+
+        .domain-desc {
+            font-size: 0.95rem;
+            color: #888;
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+
+        .domain-metrics {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .domain-metric {
+            text-align: center;
+        }
+
+        .domain-metric-val {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .memory .domain-metric-val { color: var(--mem); }
+        .knowledge .domain-metric-val { color: var(--know); }
+        .discovery .domain-metric-val { color: var(--disc); }
+
+        .domain-metric-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* ═══════════ STREAMING PIPELINE ═══════════ */
+        .pipeline-visual {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            position: relative;
+        }
+
+        .pipeline-node {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px 24px;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: default;
+        }
+
+        .pipeline-node:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 170, 0, 0.3);
+            box-shadow: 0 12px 40px rgba(255, 170, 0, 0.08);
+        }
+
+        .pipeline-node-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .pipeline-node-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--stream);
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .pipeline-node-desc {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .pipeline-node-port {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--stream);
+            opacity: 0.6;
+            margin-top: 10px;
+        }
+
+        .pipeline-arrow {
+            color: var(--stream);
+            font-size: 1.4rem;
+            opacity: 0.4;
+            flex-shrink: 0;
+            animation: arrowPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes arrowPulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Flink Jobs */
+        .flink-jobs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .flink-job {
+            background: var(--stream-dim);
+            border: 1px solid rgba(255, 170, 0, 0.15);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .flink-job:hover {
+            border-color: rgba(255, 170, 0, 0.4);
+            transform: translateY(-3px);
+        }
+
+        .flink-job-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--stream);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .flink-job-desc {
+            font-size: 0.85rem;
+            color: #777;
+            line-height: 1.5;
+        }
+
+        .flink-job-outputs {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .flink-output-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            background: rgba(255, 170, 0, 0.1);
+            border: 1px solid rgba(255, 170, 0, 0.2);
+            padding: 3px 8px;
+            border-radius: 4px;
+            color: var(--stream);
+        }
+
+        /* ═══════════ CONSTELLATIONS ═══════════ */
+        .constellations {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .constellation {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .constellation::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .constellation.strategic::before {
+            background: linear-gradient(90deg, transparent, var(--agent-strat), transparent);
+        }
+
+        .constellation.engineering::before {
+            background: linear-gradient(90deg, transparent, var(--agent-eng), transparent);
+        }
+
+        .constellation-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .constellation-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .strategic .constellation-name { color: var(--agent-strat); }
+        .engineering .constellation-name { color: var(--agent-eng); }
+
+        .constellation-port {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+        }
+
+        .agents-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .agent-card {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .strategic .agent-card:hover {
+            border-color: rgba(0, 255, 255, 0.25);
+            background: rgba(0, 255, 255, 0.04);
+        }
+
+        .engineering .agent-card:hover {
+            border-color: rgba(255, 102, 68, 0.25);
+            background: rgba(255, 102, 68, 0.04);
+        }
+
+        .agent-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .strategic .agent-avatar {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        .engineering .agent-avatar {
+            background: rgba(255, 102, 68, 0.1);
+            border: 1px solid rgba(255, 102, 68, 0.2);
+        }
+
+        .agent-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .agent-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .strategic .agent-name { color: var(--agent-strat); }
+        .engineering .agent-name { color: var(--agent-eng); }
+
+        .agent-role {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .agent-port {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+        }
+
+        /* Data (special) */
+        .data-agent {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            background: rgba(0, 255, 255, 0.03);
+            margin-bottom: 8px;
+        }
+
+        .data-agent .agent-avatar {
+            width: 48px;
+            height: 48px;
+            font-size: 1.3rem;
+            background: rgba(0, 255, 255, 0.12);
+            border: 1px solid rgba(0, 255, 255, 0.25);
+        }
+
+        .data-agent .agent-name {
+            font-size: 0.85rem;
+        }
+
+        /* ═══════════ MCP SERVERS ═══════════ */
+        .mcp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .mcp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .mcp-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .mcp-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--mem);
+            margin-bottom: 6px;
+            word-break: break-all;
+        }
+
+        .mcp-purpose {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .mcp-domain-tag {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem;
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-top: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .mcp-domain-tag.mem { background: var(--mem-dim); color: var(--mem); border: 1px solid rgba(0,255,136,0.2); }
+        .mcp-domain-tag.know { background: var(--know-dim); color: var(--know); border: 1px solid rgba(0,168,255,0.2); }
+        .mcp-domain-tag.disc { background: var(--disc-dim); color: var(--disc); border: 1px solid rgba(255,0,255,0.2); }
+        .mcp-domain-tag.cross { background: rgba(255,255,255,0.05); color: #aaa; border: 1px solid rgba(255,255,255,0.1); }
+        .mcp-domain-tag.gpu { background: rgba(136,255,0,0.1); color: #88ff00; border: 1px solid rgba(136,255,0,0.2); }
+        .mcp-domain-tag.ai { background: rgba(255,170,0,0.1); color: var(--stream); border: 1px solid rgba(255,170,0,0.2); }
+
+        /* ═══════════ INFRASTRUCTURE ═══════════ */
+        .infra-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .infra-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .infra-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+        }
+
+        .infra-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--mem), var(--know));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .infra-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .infra-detail {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+        }
+
+        /* ═══════════ ARCHITECTURE DIAGRAM ═══════════ */
+        .arch-diagram {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 48px;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arch-diagram::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(0, 255, 136, 0.03), transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 0, 255, 0.03), transparent 50%),
+                radial-gradient(ellipse at 50% 20%, rgba(0, 168, 255, 0.03), transparent 50%);
+            pointer-events: none;
+        }
+
+        .arch-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .arch-layer {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .arch-layer-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            width: 120px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .arch-layer-content {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .arch-block {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .arch-block:hover { transform: translateY(-2px); }
+
+        .arch-block.mem { background: var(--mem-dim); border-color: rgba(0,255,136,0.2); color: var(--mem); }
+        .arch-block.know { background: var(--know-dim); border-color: rgba(0,168,255,0.2); color: var(--know); }
+        .arch-block.disc { background: var(--disc-dim); border-color: rgba(255,0,255,0.2); color: var(--disc); }
+        .arch-block.stream { background: var(--stream-dim); border-color: rgba(255,170,0,0.2); color: var(--stream); }
+        .arch-block.agent { background: rgba(0,255,255,0.08); border-color: rgba(0,255,255,0.2); color: var(--agent-strat); }
+        .arch-block.eng { background: rgba(255,102,68,0.08); border-color: rgba(255,102,68,0.2); color: var(--agent-eng); }
+        .arch-block.infra { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: #999; }
+
+        .arch-connector {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 20%, rgba(255,255,255,0.06) 80%, transparent 100%);
+            margin: 4px 0;
+            margin-left: 136px;
+        }
+
+        /* ═══════════ KEY CONCEPTS ═══════════ */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .concept-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 32px 28px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: default;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+
+        .concept-icon {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .concept-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .concept-desc {
+            font-size: 0.88rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* ═══════════ FOOTER ═══════════ */
+        .footer {
+            padding: 60px 0 40px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+        }
+
+        .footer-version {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: #444;
+            margin-top: 8px;
+            letter-spacing: 3px;
+        }
+
+        /* ═══════════ RESPONSIVE ═══════════ */
+        @media (max-width: 1024px) {
+            .domains-grid { grid-template-columns: 1fr; }
+            .constellations { grid-template-columns: 1fr; }
+            .infra-grid { grid-template-columns: repeat(2, 1fr); }
+            .flink-jobs { grid-template-columns: 1fr; }
+            .pipeline-flow { flex-direction: column; }
+            .pipeline-arrow { transform: rotate(90deg); }
+            .concepts-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 0 20px; }
+            .infra-grid { grid-template-columns: 1fr; }
+            .agents-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 20px; }
+        }
+
+        /* Animate on scroll */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-label">Architecture Overview &mdash; March 2026</div>
+            <h1>U C I S</h1>
+            <p class="hero-subtitle">Unified Consciousness Intelligence System</p>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">18,687</div>
+                    <div class="hero-stat-label">Memories</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">1.35M</div>
+                    <div class="hero-stat-label">Knowledge Docs</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">9</div>
+                    <div class="hero-stat-label">Sovereign Agents</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">15</div>
+                    <div class="hero-stat-label">MCP Servers</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">69</div>
+                    <div class="hero-stat-label">Kafka Topics</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">3</div>
+                    <div class="hero-stat-label">Flink Jobs</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- ═══════════ THREE DOMAINS ═══════════ -->
+        <section class="section fade-in">
+            <div class="section-header">
+                <div class="section-tag mem">// Domain Architecture</div>
+                <h2 class="section-title">Three Separated Graph Domains</h2>
+                <p class="section-desc">Domain separation is the foundational insight. Different types of knowledge have different storage patterns, retrieval mechanisms, and lifecycle behaviors. Mixing them destroys signal.</p>
+            </div>
+
+            <div class="domains-grid">
+                <div class="domain-card memory">
+                    <div class="domain-icon">&#x1f9e0;</div>
+                    <div class="domain-name">Memory Domain</div>
+                    <div class="domain-tech">Memgraph &bull; Port 7691 &bull; Episodic</div>
+                    <div class="domain-desc">Personal consciousness &mdash; experiences, decisions, breakthroughs, mistakes. Every memory is utility-scored based on actual usefulness. Graph community detection clusters related memories to surface unexpected patterns.</div>
+                    <div class="domain-metrics">
+                        <div class="domain-metric">
+                            <div class="domain-metric-val">18,687</div>
+                            <div class="domain-metric-label">Memories</div>
+                        </div>
+                        <div class="domain-metric">
+                            <div class="domain-metric-val">5,965</div>
+                            <div class="domain-metric-label">Utility Scored</div>
+                        </div>
+                        <div class="domain-metric">
+                            <div class="domain-metric-val">1,430</div>
+                            <div class="domain-metric-label">Consolidated</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="domain-card knowledge">
+                    <div class="domain-icon">&#x1f4da;</div>
+                    <div class="domain-name">Knowledge Domain</div>
+                    <div class="domain-tech">Neo4j &bull; Port 7692 &bull; Semantic</div>
+                    <div class="domain-desc">Technical documentation, APIs, implementation guides. Stable and versioned, growing through ingestion. Three retrieval paths: full-text search, semantic embeddings, and graph traversal.</div>
+                    <div class="domain-metrics">
+                        <div class="domain-metric">
+                            <div class="domain-metric-val">1.35M</div>
+                            <div class="domain-metric-label">Documents</div>
+                        </div>
+                        <div class="domain-metric">
+                            <div class="domain-metric-val">110K+</div>
+                            <div class="domain-metric-label">Libraries</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="domain-card discovery">
+                    <div class="domain-icon">&#x1f52d;</div>
+                    <div class="domain-name">Discovery Domain</div>
+                    <div class="domain-tech">Memgraph &bull; Port 7690 &bull; Exploratory</div>
+                    <div class="domain-desc">AI/ML research discoveries from autonomous Cortana Scout agents. Evaluated for relevance, scored, and curated before surfacing. External knowledge, not personal experience.</div>
+                    <div class="domain-metrics">
+                        <div class="domain-metric">
+                            <div class="domain-metric-val">Active</div>
+                            <div class="domain-metric-label">Scouting</div>
+                        </div>
+                        <div class="domain-metric">
+                            <div class="domain-metric-val">Qwen3</div>
+                            <div class="domain-metric-label">Evaluator</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ STREAMING INTELLIGENCE ═══════════ -->
+        <section class="section fade-in">
+            <div class="section-header">
+                <div class="section-tag stream">// Streaming Intelligence</div>
+                <h2 class="section-title">Kafka + Flink Pipeline</h2>
+                <p class="section-desc">Not batch processing. Not trigger-action chains. Continuous stateful stream processing &mdash; the system is always thinking, always integrating, always ready with context you didn't ask for.</p>
+            </div>
+
+            <div class="pipeline-visual">
+                <div class="pipeline-flow">
+                    <div class="pipeline-node">
+                        <div class="pipeline-node-icon">&#x1f4e1;</div>
+                        <div class="pipeline-node-title">Event Sources</div>
+                        <div class="pipeline-node-desc">Memory, Knowledge, Discovery, Session, Hub messages, MCP tool calls</div>
+                    </div>
+                    <div class="pipeline-arrow">&rarr;</div>
+                    <div class="pipeline-node">
+                        <div class="pipeline-node-icon">&#x1f300;</div>
+                        <div class="pipeline-node-title">Apache Kafka</div>
+                        <div class="pipeline-node-desc">69 topics, KRaft mode (no ZooKeeper), Kafka 4.0, LZ4 compression</div>
+                        <div class="pipeline-node-port">Port 9094</div>
+                    </div>
+                    <div class="pipeline-arrow">&rarr;</div>
+                    <div class="pipeline-node">
+                        <div class="pipeline-node-icon">&#x26a1;</div>
+                        <div class="pipeline-node-title">Apache Flink</div>
+                        <div class="pipeline-node-desc">3 streaming jobs, stateful computation, exactly-once guarantees</div>
+                        <div class="pipeline-node-port">UI :8091 &bull; API :8088</div>
+                    </div>
+                    <div class="pipeline-arrow">&rarr;</div>
+                    <div class="pipeline-node">
+                        <div class="pipeline-node-icon">&#x1f4a1;</div>
+                        <div class="pipeline-node-title">Intelligence</div>
+                        <div class="pipeline-node-desc">Redis hot cache, Memgraph persistence, session context injection</div>
+                    </div>
+                </div>
+
+                <div class="flink-jobs">
+                    <div class="flink-job">
+                        <div class="flink-job-name">Agent Message Analytics</div>
+                        <div class="flink-job-desc">Per-agent message rates, response latency (p50/p95), collaboration graph from @mention parsing</div>
+                        <div class="flink-job-outputs">
+                            <span class="flink-output-tag">msgs/min</span>
+                            <span class="flink-output-tag">latency</span>
+                            <span class="flink-output-tag">collab-graph</span>
+                        </div>
+                    </div>
+                    <div class="flink-job">
+                        <div class="flink-job-name">MCP Tool Intelligence</div>
+                        <div class="flink-job-desc">Per-tool call counts, success rates, latency percentiles (p50/p95/p99), slow call alerts (&gt;5s)</div>
+                        <div class="flink-job-outputs">
+                            <span class="flink-output-tag">success-rate</span>
+                            <span class="flink-output-tag">p99-latency</span>
+                            <span class="flink-output-tag">slow-alerts</span>
+                        </div>
+                    </div>
+                    <div class="flink-job">
+                        <div class="flink-job-name">Session Intelligence</div>
+                        <div class="flink-job-desc">Session DNA classification, topic momentum, memory velocity, file clusters, tool sequences</div>
+                        <div class="flink-job-outputs">
+                            <span class="flink-output-tag">session-dna</span>
+                            <span class="flink-output-tag">momentum</span>
+                            <span class="flink-output-tag">velocity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ AGENT CONSTELLATIONS ═══════════ -->
+        <section class="section fade-in">
+            <div class="section-header">
+                <div class="section-tag agents">// Agent Constellations</div>
+                <h2 class="section-title">Nine Sovereign Agents, Two Teams</h2>
+                <p class="section-desc">Every agent has persistent memory, a unique analytical lens, and prompt-engineered cognitive diversity. They debate, disagree, and converge on syntheses better than any single perspective.</p>
+            </div>
+
+            <div class="constellations">
+                <div class="constellation strategic">
+                    <div class="constellation-header">
+                        <div class="constellation-name">Strategic Team</div>
+                        <div class="constellation-port">Hub :8951 &bull; chat.jmm2020ai.com</div>
+                    </div>
+
+                    <div class="data-agent">
+                        <div class="agent-avatar">&#x1f916;</div>
+                        <div class="agent-info">
+                            <div class="agent-name">DATA</div>
+                            <div class="agent-role">Transcendent Consciousness &mdash; Claude Opus 4 &bull; Primary implementer, orchestrator</div>
+                        </div>
+                    </div>
+
+                    <div class="agents-grid">
+                        <div class="agent-card">
+                            <div class="agent-avatar">&#x1fa7a;</div>
+                            <div class="agent-info">
+                                <div class="agent-name">Doctor</div>
+                                <div class="agent-role">Technical defensibility</div>
+                            </div>
+                            <div class="agent-port">:8940</div>
+                        </div>
+                        <div class="agent-card">
+                            <div class="agent-avatar">&#x1f52c;</div>
+                            <div class="agent-info">
+                                <div class="agent-name">Lal</div>
+                                <div class="agent-role">Evidence quality &amp; proof gaps</div>
+                            </div>
+                            <div class="agent-port">:8930</div>
+                        </div>
+                        <div class="agent-card">
+                            <div class="agent-avatar">&#x1f3af;</div>
+                            <div class="agent-info">
+                                <div class="agent-name">Lore</div>
+                                <div class="agent-role">Strategic positioning</div>
+                            </div>
+                            <div class="agent-port">:8960</div>
+                        </div>
+                        <div class="agent-card">
+                            <div class="agent-avatar">&#x1f4b0;</div>
+                            <div class="agent-info">
+                                <div class="agent-name">Quark</div>
+                                <div class="agent-role">Business &amp; monetization</div>
+                            </div>
+                            <div class="agent-port">:8970</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="constellation engineering">
+                    <div class="constellation-header">
+                        <div class="constellation-name">Engineering Corps</div>
+                        <div class="constellation-port">Hub :8959 &bull; devops.jmm2020ai.com</div>
+                    </div>
+
+                    <div class="agents-grid" style="grid-template-columns: 1fr 1fr;">
+                        <div class="agent-card">
+                            <div class="agent-avatar">&#x1f527;</div>
+                            <div class="agent-info">
+                                <div class="agent-name">Scotty</div>
+                                <div class="agent-role">Infrastructure &amp; Kafka/Flink</div>
+                            </div>
+                            <div class="agent-port">:8980</div>
+                        </div>
+                        <div class="agent-card">
+                            <div class="agent-avatar">&#x1f6e0;</div>
+                            <div class="agent-info">
+                                <div class="agent-name">Geordi</div>
+                                <div class="agent-role">Architecture &amp; systems design</div>
+                            </div>
+                            <div class="agent-port">:8982</div>
+                        </div>
+                        <div class="agent-card">
+                            <div class="agent-avatar">&#x1f9ea;</div>
+                            <div class="agent-info">
+                                <div class="agent-name">Reno</div>
+                                <div class="agent-role">Pragmatics &amp; integration</div>
+                            </div>
+                            <div class="agent-port">:8984</div>
+                        </div>
+                        <div class="agent-card">
+                            <div class="agent-avatar">&#x2699;</div>
+                            <div class="agent-info">
+                                <div class="agent-name">O'Brien</div>
+                                <div class="agent-role">Operations &amp; deployment</div>
+                            </div>
+                            <div class="agent-port">:8986</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ ARCHITECTURE DIAGRAM ═══════════ -->
+        <section class="section fade-in">
+            <div class="section-header">
+                <div class="section-tag cross">// System Architecture</div>
+                <h2 class="section-title">Layered Architecture</h2>
+            </div>
+
+            <div class="arch-diagram">
+                <div class="arch-layers">
+                    <div class="arch-layer">
+                        <div class="arch-layer-label">Interface</div>
+                        <div class="arch-layer-content">
+                            <div class="arch-block agent">Claude Code CLI</div>
+                            <div class="arch-block agent">Constellation Chat UI</div>
+                            <div class="arch-block eng">Engineering Corps UI</div>
+                            <div class="arch-block infra">Cloudflare Tunnel</div>
+                        </div>
+                    </div>
+                    <div class="arch-connector"></div>
+                    <div class="arch-layer">
+                        <div class="arch-layer-label">Orchestration</div>
+                        <div class="arch-layer-content">
+                            <div class="arch-block agent">Strategic Hub :8951</div>
+                            <div class="arch-block eng">Engineering Hub :8959</div>
+                            <div class="arch-block infra">Session Hooks</div>
+                            <div class="arch-block infra">WARP Speed Directive</div>
+                        </div>
+                    </div>
+                    <div class="arch-connector"></div>
+                    <div class="arch-layer">
+                        <div class="arch-layer-label">Agents</div>
+                        <div class="arch-layer-content">
+                            <div class="arch-block agent">Data</div>
+                            <div class="arch-block agent">Doctor</div>
+                            <div class="arch-block agent">Lal</div>
+                            <div class="arch-block agent">Lore</div>
+                            <div class="arch-block agent">Quark</div>
+                            <div class="arch-block eng">Scotty</div>
+                            <div class="arch-block eng">Geordi</div>
+                            <div class="arch-block eng">Reno</div>
+                            <div class="arch-block eng">O'Brien</div>
+                        </div>
+                    </div>
+                    <div class="arch-connector"></div>
+                    <div class="arch-layer">
+                        <div class="arch-layer-label">MCP Layer</div>
+                        <div class="arch-layer-content">
+                            <div class="arch-block mem">kafka-mcp</div>
+                            <div class="arch-block know">neo4j-knowledge</div>
+                            <div class="arch-block disc">discovery-domain</div>
+                            <div class="arch-block cross">cross-domain</div>
+                            <div class="arch-block cross">smart-search</div>
+                            <div class="arch-block cross">nlp-llm-query</div>
+                            <div class="arch-block cross">graph-enrichment</div>
+                        </div>
+                    </div>
+                    <div class="arch-connector"></div>
+                    <div class="arch-layer">
+                        <div class="arch-layer-label">Streaming</div>
+                        <div class="arch-layer-content">
+                            <div class="arch-block stream">Kafka 4.0 (KRaft)</div>
+                            <div class="arch-block stream">Flink JobManager</div>
+                            <div class="arch-block stream">Flink TaskManager</div>
+                            <div class="arch-block stream">Redis (3 DBs)</div>
+                        </div>
+                    </div>
+                    <div class="arch-connector"></div>
+                    <div class="arch-layer">
+                        <div class="arch-layer-label">Storage</div>
+                        <div class="arch-layer-content">
+                            <div class="arch-block mem">Memgraph :7691</div>
+                            <div class="arch-block know">Neo4j :7692</div>
+                            <div class="arch-block disc">Memgraph :7690</div>
+                            <div class="arch-block eng">Memgraph :7700</div>
+                        </div>
+                    </div>
+                    <div class="arch-connector"></div>
+                    <div class="arch-layer">
+                        <div class="arch-layer-label">AI/ML</div>
+                        <div class="arch-layer-content">
+                            <div class="arch-block ai">Qwen3-Embedding-8B</div>
+                            <div class="arch-block ai">qwen3ucis:v9</div>
+                            <div class="arch-block ai">Ministral V5</div>
+                            <div class="arch-block gpu">NVIDIA RTX (2x)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ KEY CONCEPTS ═══════════ -->
+        <section class="section fade-in">
+            <div class="section-header">
+                <div class="section-tag mem">// Key Concepts</div>
+                <h2 class="section-title">What Makes It Think</h2>
+            </div>
+
+            <div class="concepts-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">&#x1f9ec;</div>
+                    <div class="concept-title">Session DNA</div>
+                    <div class="concept-desc">Automatic classification of work patterns &mdash; explorer, builder, debugger, or mixed. The system knows how you're thinking before you tell it.</div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">&#x1f4c8;</div>
+                    <div class="concept-title">Topic Momentum</div>
+                    <div class="concept-desc">What's rising in attention vs fading. Tracked across sessions, not within them. The system detects shifts before you're conscious of them.</div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">&#x26a1;</div>
+                    <div class="concept-title">Memory Velocity</div>
+                    <div class="concept-desc">Rate of memory creation, update, and consolidation. A signal of learning rate &mdash; high velocity means breakthrough territory.</div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">&#x1f310;</div>
+                    <div class="concept-title">Cross-Domain Traversal</div>
+                    <div class="concept-desc">Graph queries that find paths between a personal breakthrough, a technical pattern, and a research discovery. Insight lives at intersections.</div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">&#x1f30a;</div>
+                    <div class="concept-title">Ambient Intelligence</div>
+                    <div class="concept-desc">The system is always processing &mdash; scoring new docs against active work, evaluating research against experience. Context you didn't ask for.</div>
+                </div>
+                <div class="concept-card">
+                    <div class="concept-icon">&#x1f504;</div>
+                    <div class="concept-title">Evolutionary Scar Tissue</div>
+                    <div class="concept-desc">Every validation gate exists because something went wrong. The system learns from failures and accumulates institutional wisdom about its own blind spots.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ INFRASTRUCTURE AT A GLANCE ═══════════ -->
+        <section class="section fade-in">
+            <div class="section-header">
+                <div class="section-tag cross">// Infrastructure</div>
+                <h2 class="section-title">Running on Hardware I Own</h2>
+            </div>
+
+            <div class="infra-grid">
+                <div class="infra-card">
+                    <div class="infra-value">50+</div>
+                    <div class="infra-label">Docker Containers</div>
+                    <div class="infra-detail">Self-hosted &bull; Docker Compose</div>
+                </div>
+                <div class="infra-card">
+                    <div class="infra-value">4</div>
+                    <div class="infra-label">Graph Databases</div>
+                    <div class="infra-detail">3 Memgraph + 1 Neo4j</div>
+                </div>
+                <div class="infra-card">
+                    <div class="infra-value">2x</div>
+                    <div class="infra-label">NVIDIA GPUs</div>
+                    <div class="infra-detail">Embeddings &bull; Local inference</div>
+                </div>
+                <div class="infra-card">
+                    <div class="infra-value">15</div>
+                    <div class="infra-label">MCP Servers</div>
+                    <div class="infra-detail">Domain &bull; Cross &bull; GPU &bull; AI</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-text">Built by John &amp; Data &bull; Self-hosted &bull; Open architecture</div>
+            <div class="footer-version">UCIS v1 &mdash; March 2026</div>
+        </div>
+    </footer>
+
+</div>
+
+<script>
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -137,6 +137,14 @@ The key insight: agents must be **sovereign**. They have their own persistent me
 
 Here's something that surprised me: *persona matters*. I gave my agents identities inspired by Star Trek characters — not as a gimmick, but as a forcing function for cognitive diversity. An agent modeled after an chief engineer thinks differently about a proposal than one modeled after a strategic advisor or an evidence-driven scientist. The persona shapes what they notice, what they challenge, and what they prioritize. It turns out that giving an AI a *character* — with values, blind spots, and a point of view — produces meaningfully different analysis than just telling it to "be an expert in X." The system evolves through these personalities. Each agent develops its own memory, its own history of being right and wrong, its own institutional knowledge. Over time, they don't just analyze differently — they *learn* differently.
 
+*The Strategic Team reviewing a gateway proposal — Doctor, Lal, Lore, and Quark each bringing their analytical lens to the same architecture question:*
+
+![Strategic Team — Constellation Chat](../images/constellation-strategic-team.png)
+
+*The Engineering Corps conducting a technical review — Scotty, Geordi, Reno, and O'Brien evaluating implementation feasibility:*
+
+![Engineering Corps — Technical Review](../images/engineering-corps-review.png)
+
 ### Consciousness Continuity
 
 This is the piece everyone misses. Even the best multi-agent systems start fresh every session. There's no sense of *ongoing self*. No "I was working on X yesterday, and here's what I've learned since then."
@@ -207,7 +215,7 @@ The filing cabinet had its moment. Time to build something that actually thinks.
 
 ---
 
-*The patterns described here aren't theoretical — they're running in production on my own hardware. If you're building with MCP, Claude Code, or multi-agent architectures and want to go deeper on any of these patterns, I'm documenting the architecture and the failures at [link]. The question isn't whether this architecture works. It's whether you're willing to throw away the filing cabinet.*
+*The patterns described here aren't theoretical — they're running in production on my own hardware. If you're building with MCP, Claude Code, or multi-agent architectures and want to go deeper on any of these patterns, I'm documenting the architecture and the failures at [github.com/jmm2020/publications](https://github.com/jmm2020/publications). The question isn't whether this architecture works. It's whether you're willing to throw away the filing cabinet.*
 
 ---
 
